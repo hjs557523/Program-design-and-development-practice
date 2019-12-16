@@ -43,8 +43,8 @@ void SearchbyName(STU *head, int n, int m);            //º¯Êý12£º°´ÐÕÃû²éÑ¯Ñ§ÉúÅ
 void WritetoFile(STU *head, int n, int m);             //º¯Êý13£º½«Ã¿¸öÑ§ÉúµÄ¼ÍÂ¼ÐÅÏ¢Ð´ÈëÎÄ¼þ
 STU *ReadfromFile(STU *head, int *n, int *m);          //º¯Êý14£º´ÓÎÄ¼þÖÐ¶Á³öÃ¿¸öÑ§ÉúµÄ¼ÍÂ¼ÐÅÏ¢²¢ÏÔÊ¾
 int DeleteFromFile(STU *head, int *n, int *m);         //º¯Êý15: ÎïÀíÉ¾³ý(É¾³ýÔÚÎÄ¼þÖÐµÄÊý¾Ý)
-STU* getAllMessageFromFile(STU *head, int count0[], int count1[], int *count2);     //º¯Êý16£º»ñÈ¡ÎÄ¼þÖÐËùÓÐµÄÑ§Éú³É¼¨Êý¾Ý£¬²¢×é³Éµ¥Á´±í
-
+STU *getAllMessageFromFile(STU *head, int count0[], int count1[], int *count2);     //º¯Êý16£º»ñÈ¡ÎÄ¼þÖÐËùÓÐµÄÑ§Éú³É¼¨Êý¾Ý£¬²¢×é³Éµ¥Á´±í
+STU *ModifyScore(STU *head);  //º¯Êý17 ÓÃÓÚÐÞ¸ÄÑ§ÉúÄ³¸ö¿ÆÄ¿µÄ³É¼¨ÐÅÏ¢
 int main()
 {
 	int n, m;
@@ -170,9 +170,10 @@ int main()
             break;
         case 16:
             system("cls");
-            break;
-        case 17:
-            system("cls");
+            printf("\n\n\n");
+			printf("\t\t\t**********************************************************************************************\n");
+			head = ModifyScore(head);
+            head = NULL;
             break;
 		case 0:
 			system("cls");  //ÇåÆÁ
@@ -193,9 +194,8 @@ int main()
 	}
 
 	return 0;
-
-
 }
+
 // ´´½¨²Ëµ¥
 int Menu(void)
 {
@@ -236,7 +236,7 @@ int Menu(void)
     printf("\t\t\t*                                                                                            *\n");
     printf("\t\t\t*                   15. ÎïÀíÉ¾³ýÑ§Éú³É¼¨ÐÅÏ¢    ¡Ì                                            *\n");
     printf("\t\t\t*                                                                                            *\n");
-    printf("\t\t\t*                   16. ÐÞ¸ÄÑ§Éú³É¼¨ÐÅÏ¢                                                     *\n");
+    printf("\t\t\t*                   16. ÐÞ¸ÄÑ§Éú³É¼¨ÐÅÏ¢        ¡Ì                                            *\n");
     printf("\t\t\t*                                                                                            *\n");
 	printf("\t\t\t*                   0.  ÍË³öÏµÍ³                                                             *\n");
 	printf("\t\t\t**********************************************************************************************\n");
@@ -906,7 +906,7 @@ void  WritetoFile(STU *head, int n, int m)
 		sum = 0.0f;
 		p = p->next;
 	}
-	printf("\t\t\t\±£´æÎÄ¼þ³É¹¦£¡ \n");
+	printf("\t\t\t±£´æÎÄ¼þ³É¹¦£¡ \n");
 	fclose(fp);
 	printf("\t\t\t*****************************************************************************************\n");
 
@@ -1118,7 +1118,7 @@ int DeleteFromFile(STU *head, int *n, int *m) {
             p = p->next;
         }
     }
-    printf("\n\t\t\t\É¾³ý³É¹¦£¡ \n");
+    printf("\n\t\t\tÉ¾³ý³É¹¦£¡ \n");
     fclose(fp);
     return 1;
 
@@ -1198,3 +1198,161 @@ STU* getAllMessageFromFile(STU *head, int count0[], int count1[], int *count2) {
     fclose(fp);
     return head1;
 }
+
+
+STU *ModifyScore(STU *head)
+{
+    int count = 0;
+    int flag2 = 1;
+    int choose;
+    int count1[1000],count2[1000];
+    STU *p;
+    long num;
+    char newName[MAX_LEN];
+    FILE *fp;
+    int i, j, k;
+    int count3 = 0;
+    float newSum = 0.0f;
+
+
+    printf("\t\t\tÇëÊäÈëÒªÐÞ¸ÄµÄ³É¼¨¼ÇÂ¼µÄÑ§ÉúÑ§ºÅ: ");
+    scanf("%ld", &num);
+
+
+    head = getAllMessageFromFile(head, count1, count2, &count);//´Óstudent.txtÖÐ»ñÈ¡Ñ§ÉúÁ´±í
+    p = head;
+    if (head != NULL)
+    {
+        do
+        {
+            if (p->num == num)
+            {
+                printf("\n\n");
+                printf("\t\t\t¸Ã³É¼¨¼ÇÂ¼µÄÏêÏ¸ÐÅÏ¢ÈçÏÂ:\n\n");
+                printf("\t\t\t**********************************************************************************************\n");
+                printf("\t\t\tÑ§ºÅ: %ld\tÐÕÃû: %s\t", p->num, p->name);
+                for (int i = 0; i < COURSE_NUM; i++)
+                {
+                    if (p->score[i] != -1.0f)
+                    {
+                        count3++;
+                        printf("¿ÆÄ¿%d: %3.0f\t",i+1, p->score[i]);
+                    }
+                }
+                printf("×Ü·Ö:%3.0f\tÆ½¾ù·Ö:%3.0f\n", p->sum, p->aver);
+                printf("\t\t\t**********************************************************************************************\n");
+                flag2 = 0;
+                break;
+            }
+            p = p->next;
+        }
+        while(p != NULL);
+    }
+
+    if (flag2 != 0)
+    {
+        printf("\n\n");
+        printf("\t\t\t±§Ç¸, Ã»ÓÐÕÒµ½Ïà¹Ø¼ÇÂ¼!\n");
+    }
+    else
+    {
+        printf("\n\n\t\t\t´ýÐÞ¸ÄÏî: 1.ÐÕÃû   2.Ñ§ºÅ   3.¿ÆÄ¿   4.ÍË³ö\n\n");
+        printf("\t\t\tÇëÑ¡ÔñÐÞ¸ÄÏîµÄÎ»ÖÃÐòºÅ: ");
+        scanf("%d", &choose);
+        printf("\n\n");
+        fp = fopen("student.txt", "w");//ÒÔÇå¿ÕµÄ·½Ê½´ò¿ªÎÄ¼þ
+        switch (choose)
+        {
+        case 1:
+            printf("\t\t\tÇëÊäÈëÐÂµÄÑ§ÉúÐÕÃû: ");
+            scanf("%s", p->name);
+            printf("\n");
+            p = head;
+            for (i = 0; i < count; i++)
+            {
+                fprintf(fp, "%d\t%d\n", count1[i], count2[i]);
+                for (j = 0; j < count1[i]; j++)
+                {
+
+                    fprintf(fp, "%12ld%12s", p->num, p->name);//Ò»¸öºº×ÖÕ¼2¸ö×Ö·û
+                    for (k = 0; k < count2[i]; k++)
+                    {
+                        fprintf(fp, "%12.0f", p->score[k]);//Êä³ö¿í¶È12£¬Ð¡Êýµãºó±£Áô0Î»¡£¼´ÓÐÐ¡ÊýµÄÒ²Ä¬ÈÏÈ¡ÕûÊý²¿·Ö
+                    }
+                    fprintf(fp, "%12.0f%12.0f\n", p->sum, p->aver);
+                    p = p->next;
+                }
+            }
+            system("cls");
+            printf("\n\n\t\t\t**********************************************************************************************\n");
+            printf("\t\t\tÐÞ¸Ä³É¹¦£¡\n");
+            break;
+        case 2:
+            printf("\t\t\tÇëÊäÈëÐÂµÄÑ§ÉúÑ§ºÅ: ");
+            scanf("%ld", &p->num);
+            printf("\n");
+            p = head;
+            for (i = 0; i < count; i++)
+            {
+                fprintf(fp, "%d\t%d\n", count1[i], count2[i]);
+                for (j = 0; j < count1[i]; j++)
+                {
+
+                    fprintf(fp, "%12ld%12s", p->num, p->name);//Ò»¸öºº×ÖÕ¼2¸ö×Ö·û
+                    for (k = 0; k < count2[i]; k++)
+                    {
+
+                        fprintf(fp, "%12.0f", p->score[k]);//Êä³ö¿í¶È12£¬Ð¡Êýµãºó±£Áô0Î»¡£¼´ÓÐÐ¡ÊýµÄÒ²Ä¬ÈÏÈ¡ÕûÊý²¿·Ö
+                    }
+                    fprintf(fp, "%12.0f%12.0f\n", p->sum, p->aver);
+                    p = p->next;
+                }
+            }
+            system("cls");
+            printf("\n\n\t\t\t**********************************************************************************************\n");
+            printf("\t\t\tÐÞ¸Ä³É¹¦£¡\n");
+            break;
+        case 3:
+            printf("\t\t\t¸ÃÑ§Éú¹²ÓÐ %d ÃÅ¿ÆÄ¿³É¼¨, ÇëÑ¡Ôñ´ýÐÞ¸ÄµÄ¿ÆÄ¿ÐòºÅ: ", count3);
+            scanf("%ld", &choose);
+            while(choose <= 0 || choose > count3)
+            {
+                printf("\n\t\t\tÊäÈë´íÎó, ÇëÖØÐÂÊäÈë: ");
+                scanf("%ld", &choose);
+            }
+            printf("\n\n\t\t\tÇëÊäÈëÐÂµÄ³É¼¨: ");
+            scanf("%f", &p->score[choose-1]);
+            printf("\n");
+            p = head;
+            for (i = 0; i < count; i++)
+            {
+                fprintf(fp, "%d\t%d\n", count1[i], count2[i]);
+                for (j = 0; j < count1[i]; j++)
+                {
+
+                    fprintf(fp, "%12ld%12s", p->num, p->name);
+                    for (k = 0; k < count2[i]; k++)
+                    {
+                        newSum = newSum + p->score[k];
+                        fprintf(fp, "%12.0f", p->score[k]);//Êä³ö¿í¶È12£¬Ð¡Êýµãºó±£Áô0Î»¡£¼´ÓÐÐ¡ÊýµÄÒ²Ä¬ÈÏÈ¡ÕûÊý²¿·Ö
+                    }
+                    fprintf(fp, "%12.0f%12.0f\n", newSum, newSum/count2[i]);
+                    p = p->next;
+                }
+            }
+            system("cls");
+            printf("\n\n\t\t\t**********************************************************************************************\n");
+            printf("\t\t\tÐÞ¸Ä³É¹¦£¡\n");
+            break;
+        case 4:
+            break;
+        default:
+            printf("\t\t\tÊäÈë´íÎó!\n");
+        }
+
+    }
+    fclose(fp);
+    return head;
+
+}
+
