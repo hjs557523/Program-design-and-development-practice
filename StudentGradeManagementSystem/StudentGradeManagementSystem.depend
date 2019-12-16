@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1576464266 source:d:\documents\desktop\程序设计课程实践\studentgrademanagementsystem\main.c
+	<stdio.h>
+	<string.h>
+	<math.h>
+	<malloc.h>
+	<stdlib.h>
+
