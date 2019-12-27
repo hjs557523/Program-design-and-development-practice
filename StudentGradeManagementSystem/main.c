@@ -23,28 +23,24 @@ typedef struct Student
 }STU;
 
 
-int Menu(void);                                        //函数1：创建菜单函数
-void Print(STU *head, int n, int m);                   //函数2：打印函数
-
-void AverSumofEveryStudent(STU *head);                 //函数3：计算每门课程的总分和平均分
-void AverSumofEveryCourse(STU *head);                  //函数4：计算每个学生的总分和平均分
-void StatisticAnalysis(STU *head, int n, int m);       //函数5：按类别及比例输出
-
-STU *SortbyScore(STU *head, int n);				       //函数6：按每个学生的总分由高到低排出名次表
-STU *SortbyScore1(STU *head, int n);                   //函数7：按每个学生的总分由低到高排出名次表
-STU *SortbyNum(STU *head);                             //函数8：按学号由小到大排出成绩表
-STU *SortbyName(STU *head, int n);                     //函数9：按姓名的字典顺序排出成绩表
-STU *Create(int n, int m);                             //函数10：创建链表并录入信息
-STU *Creat1(int n, int m);
-
-void SearchbyNum(STU *head, int n, int m);             //函数11：按学号查询学生排名及其考试成绩
-void SearchbyName(STU *head, int n, int m);            //函数12：按姓名查询学生排名及其考试成绩
-
-void WritetoFile(STU *head, int n, int m);             //函数13：将每个学生的纪录信息写入文件
-STU *ReadfromFile(STU *head, int *n, int *m);          //函数14：从文件中读出每个学生的纪录信息并显示
-int DeleteFromFile(STU *head, int *n, int *m);         //函数15: 物理删除(删除在文件中的数据)
-STU *getAllMessageFromFile(STU *head, int count0[], int count1[], int *count2);     //函数16：获取文件中所有的学生成绩数据，并组成单链表
-STU *ModifyScore(STU *head);  //函数17 用于修改学生某个科目的成绩信息
+int Menu(void);                                        //函数1：创建菜单函数（朱伯翰）
+void Print(STU *head, int n, int m);                   //函数2：打印函数（朱伯翰）
+void AverSumofEveryStudent(STU *head);                 //函数3：计算每门课程的总分和平均分（朱伯翰）
+void AverSumofEveryCourse(STU *head);                  //函数4：计算每个学生的总分和平均分（朱伯翰）
+void StatisticAnalysis(STU *head, int n, int m);       //函数5：按类别及比例输出（朱伯翰）
+STU *SortbyScore(STU *head, int n);				       //函数6：按每个学生的总分由高到低排出名次表（朱伯翰）
+STU *SortbyScore1(STU *head, int n);                   //函数7：按每个学生的总分由低到高排出名次表（朱伯翰）
+STU *SortbyNum(STU *head);                             //函数8：按学号由小到大排出成绩表（朱伯翰）
+STU *SortbyName(STU *head, int n);                     //函数9：按姓名的字典顺序排出成绩表（朱伯翰）
+STU *Create(int n, int m);                             //函数10：创建链表并录入信息（黄继升）
+void SearchbyNum(STU *head, int n, int m);             //函数11：按学号查询学生排名及其考试成绩（黄继升）
+void SearchbyName(STU *head, int n, int m);            //函数12：按姓名查询学生排名及其考试成绩（黄继升）
+void WritetoFile(STU *head, int n, int m);             //函数13：将每个学生的纪录信息写入文件（黄继升）
+STU *ReadfromFile(STU *head, int *n, int *m);          //函数14：从文件中读出每个学生的纪录信息并显示（黄继升）
+int DeleteFromFile(STU *head, int *n, int *m);         //函数15: 物理删除(删除在文件中的数据)（黄继升）
+STU *getAllMessageFromFile(STU *head, int count0[], int count1[], int *count2);     //函数16：获取文件中所有的学生成绩数据，并组成单链表（黄继升）
+STU *ModifyScore(STU *head);                           //函数17 用于修改学生某个科目的成绩信息（黄继升）
+STU *Creat1(int n, int m);                             //函数18 创建临时学生链表（黄继升）
 int main()
 {
 	int n, m;
@@ -114,28 +110,28 @@ int main()
 		case 7:
 			system("cls");  //清屏
 			printf("\n\n\n");
-			printf("\t\t\t**********************************************************************************************\n");
+			printf("\t\t\t****************************************************************************************************************\n");
 			printf("\t\t\t按照学生名字的字典顺序排序:\n");
 			head = SortbyName(head, n);
-			printf("\t\t\t**********************************************************************************************\n");
+			printf("\t\t\t****************************************************************************************************************\n");
 			head = NULL;
 			break;
 		case 8:
 			system("cls");  //清屏
 			printf("\n\n\n");
-			printf("\t\t\t**********************************************************************************************\n");
+			printf("\t\t\t****************************************************************************************************************\n");
 			printf("\t\t\t请输入所查询成绩的学号: ");
 			SearchbyNum(head, n, m);
-			printf("\t\t\t**********************************************************************************************\n");
+			printf("\t\t\t****************************************************************************************************************\n");
 			head = NULL;
 			break;
 		case 9:
 			system("cls");  //清屏
 			printf("\n\n\n");
-			printf("\t\t\t**********************************************************************************************\n");
+			printf("\t\t\t****************************************************************************************************************\n");
 			printf("\t\t\t请输入所要查询成绩的学生姓名: ");
 			SearchbyName(head, n, m);
-			printf("\t\t\t**********************************************************************************************\n");
+			printf("\t\t\t****************************************************************************************************************\n");
 			head = NULL;
 			break;
 		case 10:
@@ -262,11 +258,9 @@ STU *Create(int n, int m) {
 		p1 = (STU *)malloc(LEN);
 		printf("\t\t\t");
 		scanf("%ld", &p1->num);//输入学号
-		printf("\t\t\t");
 		scanf("%s", p1->name);//输入姓名
 		for (j = 0; j < m; j++)
 		{
-			printf("\t\t\t");
 			scanf("%f", &p1->score[j]);
 		}
 
@@ -1053,26 +1047,7 @@ int DeleteFromFile(STU *head, int *n, int *m) {
     }
     fclose(fp);
 
-// debug
-//    printf("\t\t\t%d\n", count2);
-//
-//    for(int i = 0; i < count2; i++) {
-//        printf("%d\t%d\n",count0[i], count1[i]);
-//    }
 
-
-//    p1 = head1;
-//    for(int i = 0; i < count2; i++){
-//        for(int j = 0; j < count0[i]; j++) {
-//            printf("%ld\t%s\t", p1->num, p1->name);
-//            for(int k = 0; k < count1[i]; k++) {
-//                    printf("%f\t", p1->score[k]);
-//            }
-//            printf("%f\t%f", p1->sum, p1->aver);
-//            printf("\n");
-//            p1 = p1->next;
-//        }
-//	}
 
 
     p = p1 = head1;
@@ -1137,7 +1112,7 @@ STU* getAllMessageFromFile(STU *head, int count0[], int count1[], int *count2) {
         return NULL;
     }
 
-    if (fgetc(fp) == EOF) {
+    if (fgetc(fp) == EOF) { //读取一个字节
         printf("\t\t\tstudent.txt 没有数据!\n");
         return NULL;
     }
